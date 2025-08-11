@@ -1,0 +1,12 @@
+---
+include:
+  - "app/**/*.rb"
+  - "lib/**/*.rb"
+require:
+  - rubocop
+domains: []
+reporters:
+  - rubocop
+plugins: []
+
+

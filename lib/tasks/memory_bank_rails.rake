@@ -10,7 +10,7 @@ require File.expand_path("../memory_bank_rails/services/report", __dir__)
 namespace :memory_bank do
   desc "Install Memory Bank (non-interactive). Options: GUIDE=rails_web WITH_RULES=true"
   task :init do
-    guide = ENV["GUIDE"] || "rails_web"
+    guide = ENV["GUIDE"] || "select"
     with_rules = ENV["WITH_RULES"] == "true"
 
     if defined?(Rails::Generators)
@@ -62,8 +62,27 @@ namespace :memory_bank do
     current = File.exist?(config_path) ? YAML.safe_load(File.read(config_path)) : {}
     current ||= {}
     current["memory_bank"] ||= {}
-    current["memory_bank"]["guides_path"] = ENV["GUIDES_PATH"] if ENV["GUIDES_PATH"]
-    current["memory_bank"]["default_guide"] = ENV["DEFAULT_GUIDE"] if ENV["DEFAULT_GUIDE"]
+    guides_path = ENV["GUIDES_PATH"]
+    default_guide = ENV["DEFAULT_GUIDE"]
+
+    unless guides_path && default_guide
+      # interactive fallback
+      puts "Configure Memory Bank"
+      puts "====================="
+      guides_path ||= begin
+        print "Guides path (folder containing your custom guides) [leave blank to keep current]: "
+        input = $stdin.gets&.strip
+        input unless input.to_s.empty?
+      end
+      default_guide ||= begin
+        print "Default guide slug (e.g., company-rails) [leave blank to keep current]: "
+        input = $stdin.gets&.strip
+        input unless input.to_s.empty?
+      end
+    end
+
+    current["memory_bank"]["guides_path"] = guides_path if guides_path
+    current["memory_bank"]["default_guide"] = default_guide if default_guide
 
     File.write(config_path, current.to_yaml)
     puts "Updated #{config_path}"
