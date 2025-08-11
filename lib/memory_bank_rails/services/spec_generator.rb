@@ -4,6 +4,7 @@ require_relative "filesystem"
 
 module MemoryBankRails
   module Services
+    # Generates SPEC scaffolding files under `.specs/<feature-slug>`.
     class SpecGenerator
       def initialize(root_path)
         @fs = Filesystem.new(root_path)
@@ -58,5 +59,3 @@ module MemoryBankRails
     end
   end
 end
-
-

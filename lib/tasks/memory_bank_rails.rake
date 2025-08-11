@@ -30,7 +30,7 @@ namespace :memory_bank do
 
   desc "Generate a new SPEC. Usage: rake memory_bank:spec:new FEATURE=feature-slug"
   task "spec:new" do
-    feature = ENV["FEATURE"]
+    feature = ENV.fetch("FEATURE", nil)
     if feature.to_s.strip.empty?
       puts "FEATURE is required"
       exit 1
@@ -43,7 +43,7 @@ namespace :memory_bank do
   desc "Check Memory Bank files exist"
   task :check do
     root = defined?(Rails) ? Rails.root.to_s : Dir.pwd
-    ok = MemoryBankRails::Services::Checker.new(root).verify!
+    ok = MemoryBankRails::Services::Checker.new(root).verify?
     exit(1) unless ok
   end
 
@@ -59,11 +59,11 @@ namespace :memory_bank do
     config_path = File.join(root, "config", "memory_bank.yml")
     FileUtils.mkdir_p(File.dirname(config_path))
 
-    current = File.exist?(config_path) ? YAML.safe_load(File.read(config_path)) : {}
+    current = File.exist?(config_path) ? YAML.safe_load_file(config_path) : {}
     current ||= {}
     current["memory_bank"] ||= {}
-    guides_path = ENV["GUIDES_PATH"]
-    default_guide = ENV["DEFAULT_GUIDE"]
+    guides_path = ENV.fetch("GUIDES_PATH", nil)
+    default_guide = ENV.fetch("DEFAULT_GUIDE", nil)
 
     unless guides_path && default_guide
       # interactive fallback
@@ -88,5 +88,3 @@ namespace :memory_bank do
     puts "Updated #{config_path}"
   end
 end
-
-

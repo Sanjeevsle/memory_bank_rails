@@ -9,7 +9,11 @@ Gem::Specification.new do |spec|
   spec.email = ["matheus.puppe90@hotmail.com"]
 
   spec.summary = "Rails engine that bootstraps AI-ready docs and project memory for Rails teams."
-  spec.description = "Memory Bank for Agents (Rails) provides generators, rake tasks, and configuration to scaffold an opinionated documentation and memory system for Rails apps, including SPEC-driven workflows, guides, and optional editor rules."
+  spec.description = <<~DESC
+    Memory Bank for Agents (Rails) provides generators, rake tasks, and configuration
+    to scaffold an opinionated documentation and memory system for Rails apps,
+    including SPEC-driven workflows, guides, and optional editor rules.
+  DESC
   spec.homepage = "https://github.com/your-org/memory_bank_rails"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.1.0"
@@ -20,6 +24,7 @@ Gem::Specification.new do |spec|
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/your-org/memory_bank_rails"
   spec.metadata["changelog_uri"] = "https://github.com/your-org/memory_bank_rails/blob/main/CHANGELOG.md"
+  spec.metadata["rubygems_mfa_required"] = "true"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -38,8 +43,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "railties", ">= 7.0"
   spec.add_dependency "thor", ">= 1.2"
 
-  # Development dependencies
-  spec.add_development_dependency "rake", ">= 13.0"
+  # Development dependencies are specified in the Gemfile
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html

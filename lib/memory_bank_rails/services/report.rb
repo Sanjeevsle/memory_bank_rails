@@ -16,8 +16,8 @@ module MemoryBankRails
 
         Dir.glob(File.join(specs_root, "**", "*.md")).each do |file|
           content = File.read(file)
-          total += content.scan(/\- \[.\]/).size
-          done += content.scan(/\- \[x\]/i).size
+          total += content.scan(/- \[.\]/).size
+          done += content.scan(/- \[x\]/i).size
         end
 
         percent = total.zero? ? 0 : ((done.to_f / total) * 100).round(1)
@@ -26,5 +26,3 @@ module MemoryBankRails
     end
   end
 end
-
-

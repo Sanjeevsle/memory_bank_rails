@@ -16,13 +16,13 @@ module MemoryBankRails
         @root_path = root_path
       end
 
-      def verify!
+      def verify?
         missing = REQUIRED_FILES.reject { |p| File.exist?(File.join(@root_path, p)) }
         if missing.empty?
           puts "Memory Bank: OK"
           true
         else
-          puts "Missing files:" 
+          puts "Missing files:"
           missing.each { |m| puts " - #{m}" }
           false
         end
@@ -30,5 +30,3 @@ module MemoryBankRails
     end
   end
 end
-
-

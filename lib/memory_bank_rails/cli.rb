@@ -36,6 +36,7 @@ module MemoryBankRails
 end
 
 # Backwards compatible alias used in README one-off example
+
 module MemoryBank
   class CLI
     def self.run(command)
@@ -43,5 +44,3 @@ module MemoryBank
     end
   end
 end
-
-

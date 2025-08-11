@@ -9,8 +9,14 @@ module MemoryBank
     class InstallGenerator < Rails::Generators::Base
       source_root File.expand_path("templates", __dir__)
 
-      class_option :guide, type: :string, default: "select", desc: "Which guide to install (or 'select' to choose interactively)"
-      class_option :with_rules, type: :boolean, default: false, desc: "Copy editor rules (.cursorrules, RuboCop, Solargraph) if available"
+      class_option :guide,
+                   type: :string,
+                   default: "select",
+                   desc: "Which guide to install (or 'select' to choose interactively)"
+      class_option :with_rules,
+                   type: :boolean,
+                   default: false,
+                   desc: "Copy editor rules (.cursorrules, RuboCop, Solargraph) if available"
 
       def create_config
         template "config/memory_bank.yml.erb", "config/memory_bank.yml"
@@ -66,9 +72,8 @@ module MemoryBank
       def select_guide_interactively(guides_path)
         builtin = available_builtin_guides
         external = available_external_guides(guides_path)
-        options = []
-        builtin.each { |g| options << ["📦 #{g} (builtin)", :builtin, g, nil] }
-        external.each { |g, path| options << ["🔧 #{g} (external)", :external, g, path] }
+        options = builtin.map { |g| ["📦 #{g} (builtin)", :builtin, g, nil] } +
+                  external.map { |g, path| ["🔧 #{g} (external)", :external, g, path] }
 
         if options.empty?
           say "No guides available. Falling back to builtin 'rails_web'", :yellow
@@ -78,11 +83,11 @@ module MemoryBank
         say "\n🚀 Memory Bank Initializer (Rails)", :green
         say "=================================\n"
         options.each_with_index do |(label, _kind, _slug, _path), idx|
-          say format("%2d) %s", idx + 1, label)
+          say format("%<num>2d) %<label>s", num: idx + 1, label: label)
         end
         choice = ask("\n? What type of memory bank would you like to install? (1-#{options.size})").to_i
         choice = 1 if choice < 1 || choice > options.size
-        label, kind, slug, full_path = options[choice - 1]
+        _label, kind, slug, full_path = options[choice - 1]
         [slug, kind, full_path]
       end
 
@@ -94,8 +99,10 @@ module MemoryBank
 
       def available_external_guides(guides_path)
         return [] unless guides_path
+
         expanded = File.expand_path(guides_path)
         return [] unless Dir.exist?(expanded)
+
         Dir.children(expanded).filter_map do |entry|
           full = File.join(expanded, entry)
           guide_md = File.join(full, "developmentGuide.md")
@@ -112,9 +119,9 @@ module MemoryBank
         FileUtils.cp(source_md, File.join(destination_root, ".memory_bank", "developmentGuide.md"))
 
         rules = File.join(external_dir, ".cursorrules")
-        if options["with_rules"] && File.exist?(rules)
-          FileUtils.cp(rules, File.join(destination_root, ".cursorrules"))
-        end
+        return unless options["with_rules"] && File.exist?(rules)
+
+        FileUtils.cp(rules, File.join(destination_root, ".cursorrules"))
       end
 
       def install_editor_rules
@@ -131,5 +138,3 @@ module MemoryBank
     end
   end
 end
-
-

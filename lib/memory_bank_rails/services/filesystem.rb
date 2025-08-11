@@ -35,5 +35,3 @@ module MemoryBankRails
     end
   end
 end
-
-
