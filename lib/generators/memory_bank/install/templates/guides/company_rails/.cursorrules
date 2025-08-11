@@ -1,0 +1,8 @@
+# Cursor rules for Company Rails projects
+
+include: .memory_bank/developmentGuide.md
+
+rules:
+  - use_company_gems: true
+  - enforce_rubocop: true
+

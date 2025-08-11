@@ -1,0 +1,8 @@
+# Cursor rules for Rails API projects
+
+include: .memory_bank/developmentGuide.md
+
+rules:
+  - prefer_jsonapi: true
+  - avoid_view_layer: true
+

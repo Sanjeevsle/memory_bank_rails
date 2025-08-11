@@ -1,0 +1,8 @@
+# Cursor rules for Rails Web projects
+
+include: .memory_bank/developmentGuide.md
+
+rules:
+  - prefer_hotwire: true
+  - use_service_objects: true
+
