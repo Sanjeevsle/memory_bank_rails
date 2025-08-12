@@ -299,7 +299,6 @@ MIT. See `LICENSE`.
 
 * Issues: GitHub Issues
 * Discussions: GitHub Discussions
-* Email: [support@your-org.example](mailto:support@your-org.example)
 
 ---
 
